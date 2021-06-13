@@ -5,9 +5,9 @@ Python script using boto3 and python-telegram-bot
 - clone git repo, copy config file from example and enter your values
 ```
 git clone https://github.com/harvestfi/logswatch.git
-cd cloudwatch
-cp cloudwatch.logs.example cloudwatch.example
-vim cloudwatch.example
+cd logswatch
+cp logswatch.conf.example logswatch.conf
+vim logswatch.conf
 ```
 - run periodicaly using e.g. cron (align interval with `querySeconds` config value)
 ```
