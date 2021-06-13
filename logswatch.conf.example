@@ -1,0 +1,12 @@
+[telegram]
+token = <telegram bot token>
+chatId = <telegram chat id>
+
+[cloudwatch]
+querySeconds = 310
+logGroup = /aws/containerinsights/<yourcluster>/application
+# query to run on cloudwatch
+query = fields @message | filter kubernetes.container_name = "ethparser" | filter log like "[ERROR]"
+# additional regex filter of response data, to disable set False
+exclude = True
+excludeRegex = 0x[a-fA-F0-9]+
