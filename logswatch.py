@@ -44,8 +44,9 @@ for result in reversed(response['results']):
     message += " / "+jsonResult['kubernetes']['pod_name']
     message += "</b>\n<pre>"+jsonResult['log']+"</pre>"
     regex = '^(.*?)'+config['cloudwatch']['excludeRegex']+'(.*?)$'
-    if config['cloudwatch']['exclude'] and re.match(regex, jsonResult['log']):
+    if config['cloudwatch']['exclude'] == 'True' and re.match(regex, jsonResult['log']):
         logging.info("EXCLUDED: "+jsonResult['log'])
-    updater.bot.send_message(chat_id=config['telegram']['chatId'], text=message, parse_mode=ParseMode.HTML)
-    logging.info("SENT: "+jsonResult['log'])
-    time.sleep(1)
+    else:
+        updater.bot.send_message(chat_id=config['telegram']['chatId'], text=message, parse_mode=ParseMode.HTML)
+        logging.info("SENT: "+jsonResult['log'])
+        time.sleep(1)
