@@ -40,13 +40,14 @@ while response == None or response['status'] == 'Running':
 logging.info(f'Received response after {(datetime.now()-queryStartTime).total_seconds()}s',)
 for result in reversed(response['results']):
     jsonResult = json.loads(result[0]['value'])
+    log = jsonResult['log_processed']['log']
     message = "<b>"+jsonResult['kubernetes']['namespace_name']
     message += " / "+jsonResult['kubernetes']['pod_name']
-    message += "</b>\n<pre>"+jsonResult['log']+"</pre>"
+    message += "</b>\n<pre>"+log+"</pre>"
     regex = '^(.*?)'+config['cloudwatch']['excludeRegex']+'(.*?)$'
-    if config['cloudwatch']['exclude'] == 'True' and re.match(regex, jsonResult['log']):
-        logging.info("EXCLUDED: "+jsonResult['log'])
+    if config['cloudwatch']['exclude'] == 'True' and re.match(regex, log):
+        logging.info("EXCLUDED: "+log)
     else:
         updater.bot.send_message(chat_id=config['telegram']['chatId'], text=message, parse_mode=ParseMode.HTML)
-        logging.info("SENT: "+jsonResult['log'])
+        logging.info("SENT: "+log)
         time.sleep(1)
