@@ -48,6 +48,6 @@ for result in reversed(response['results']):
     if config['cloudwatch']['exclude'] == 'True' and re.match(regex, log):
         logging.info("EXCLUDED: "+log)
     else:
-        #updater.bot.send_message(chat_id=config['telegram']['chatId'], text=message, parse_mode=ParseMode.HTML)
+        updater.bot.send_message(chat_id=config['telegram']['chatId'], text=message, parse_mode=ParseMode.HTML)
         logging.info("SENT: "+log)
         time.sleep(1)
